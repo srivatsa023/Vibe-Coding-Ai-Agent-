@@ -44,7 +44,7 @@ pitch = investor_pitch(idea)
 print("✅ Investor Pitch Complete")
 
 print("\n📈 Running Business Strategy Agent...")
-strategy = business_strategy(research)
+strategy = business_strategy(idea, research)
 print("✅ Strategy Complete")
 
 print("\n🌐 Running Website Content Agent...")
