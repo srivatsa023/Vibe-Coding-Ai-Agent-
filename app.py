@@ -1,3 +1,9 @@
+from agents.swot import swot_analysis
+
+from agents.investor_pitch import investor_pitch
+
+from utils.pdf_export import generate_pdf
+
 from agents.market_research import market_research
 from agents.business_strategy import business_strategy
 from agents.website_content import website_content
@@ -29,6 +35,14 @@ print("\n🔍 Running Market Research Agent...")
 research = market_research(idea)
 print("✅ Research Complete")
 
+print("\n📊 Running SWOT Agent...")
+swot = swot_analysis(idea)
+print("✅ SWOT Complete")
+
+print("\n💰 Running Investor Pitch Agent...")
+pitch = investor_pitch(idea)
+print("✅ Investor Pitch Complete")
+
 print("\n📈 Running Business Strategy Agent...")
 strategy = business_strategy(research)
 print("✅ Strategy Complete")
@@ -42,30 +56,31 @@ marketing_output = marketing(website)
 print("✅ Marketing Complete")
 
 # Combine all outputs
+
 final_report = f"""
-==============================
 MARKET RESEARCH
-==============================
 
 {research}
 
-==============================
 BUSINESS STRATEGY
-==============================
 
 {strategy}
 
-==============================
 WEBSITE CONTENT
-==============================
 
 {website}
 
-==============================
-MARKETING CONTENT
-==============================
+MARKETING
 
 {marketing_output}
+
+SWOT ANALYSIS
+
+{swot}
+
+INVESTOR PITCH
+
+{pitch}
 """
 
 print("\n📝 Running Reviewer Agent...")
@@ -91,3 +106,7 @@ with open("startup_report.txt", "w", encoding="utf-8") as file:
     file.write(reviewed_report)
 
 print("\n📄 Report saved as startup_report.txt")
+
+generate_pdf(reviewed_report)
+
+print("📄 PDF saved as startup_report.pdf")
