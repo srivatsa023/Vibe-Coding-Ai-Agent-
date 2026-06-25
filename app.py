@@ -1,14 +1,12 @@
 from agents.swot import swot_analysis
-
 from agents.investor_pitch import investor_pitch
-
-from utils.pdf_export import generate_pdf
-
 from agents.market_research import market_research
 from agents.business_strategy import business_strategy
 from agents.website_content import website_content
 from agents.marketing import marketing
 from agents.reviewer import reviewer
+
+from utils.pdf_export import generate_pdf
 
 import time
 
@@ -21,7 +19,6 @@ print("🚀 LaunchPilot AI")
 print("Multi-Agent Startup Generator")
 print("=" * 60)
 
-# User Input
 # User Input Validation
 while True:
     idea = input("\nEnter Startup Idea: ").strip()
@@ -31,6 +28,7 @@ while True:
 
     print("❌ Please enter a startup idea.")
 
+# Run Agents
 print("\n🔍 Running Market Research Agent...")
 research = market_research(idea)
 print("✅ Research Complete")
@@ -55,58 +53,81 @@ print("\n📢 Running Marketing Agent...")
 marketing_output = marketing(website)
 print("✅ Marketing Complete")
 
-# Combine all outputs
-
+# Combine Outputs
 final_report = f"""
 MARKET RESEARCH
 
 {research}
 
-BUSINESS STRATEGY
-
-{strategy}
-
-WEBSITE CONTENT
-
-{website}
-
-MARKETING
-
-{marketing_output}
-
+============================================================
 SWOT ANALYSIS
+=============
 
 {swot}
 
+============================================================
 INVESTOR PITCH
+==============
 
 {pitch}
+
+============================================================
+BUSINESS STRATEGY
+=================
+
+{strategy}
+
+============================================================
+WEBSITE CONTENT
+===============
+
+{website}
+
+============================================================
+MARKETING
+=========
+
+{marketing_output}
 """
 
+# Reviewer Agent
 print("\n📝 Running Reviewer Agent...")
 reviewed_report = reviewer(final_report)
 print("✅ Review Complete")
 
-# End timer
+# Final Combined Report
+complete_report = f"""
+{final_report}
+
+============================================================
+REVIEWER FEEDBACK
+=================
+
+{reviewed_report}
+"""
+
+# End Timer
 end_time = time.time()
 
-# Final Output
+# Display Output
 print("\n" + "=" * 60)
 print("🎉 STARTUP LAUNCH PACK GENERATED")
 print("=" * 60)
 
-print(reviewed_report)
+print(complete_report)
 
 print("\n" + "=" * 60)
 print(f"⏱️ Total Processing Time: {end_time - start_time:.2f} seconds")
 print("=" * 60)
 
-
+# Save TXT Report
 with open("startup_report.txt", "w", encoding="utf-8") as file:
-    file.write(reviewed_report)
+    file.write(complete_report)
 
 print("\n📄 Report saved as startup_report.txt")
 
-generate_pdf(reviewed_report)
+# Save PDF Report
+generate_pdf(complete_report)
 
 print("📄 PDF saved as startup_report.pdf")
+
